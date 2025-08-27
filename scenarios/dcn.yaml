@@ -1,0 +1,112 @@
+---
+undercloud:
+  config:
+    - section: DEFAULT
+      option: undercloud_hostname
+      value: undercloud.example.com
+    - section: DEFAULT
+      option: undercloud_timezone
+      value: UTC
+    - section: DEFAULT
+      option: undercloud_debug
+      value: true
+    - section: DEFAULT
+      option: container_cli
+      value: podman
+    - section: DEFAULT
+      option: undercloud_enable_selinux
+      value: false
+    - section: DEFAULT
+      option: generate_service_certificate
+      value: false
+
+    - section: DEFAULT
+      option: local_interface
+      value: eth0
+    - section: DEFAULT
+      option: local_ip
+      value: 192.168.122.100/24
+    - section: DEFAULT
+      option: enable_routed_networks
+      value: true
+    - section: DEFAULT
+      option: subnets
+      value: leaf0,leaf1,leaf2
+    - section: DEFAULT
+      option: local_subnet
+      value: leaf0
+
+    - section: leaf0
+      option: cidr
+      value: 192.168.122.0/24
+    - section: leaf0
+      option: gateway
+      value: 192.168.122.1
+    - section: leaf0
+      option: masquerade
+      value: false
+
+    - section: leaf1
+      option: cidr
+      value: 192.168.133.0/24
+    - section: leaf1
+      option: gateway
+      value: 192.168.133.1
+    - section: leaf1
+      option: masquerade
+      value: false
+
+    - section: leaf2
+      option: cidr
+      value: 192.168.144.0/24
+    - section: leaf2
+      option: gateway
+      value: 192.168.144.1
+    - section: leaf2
+      option: masquerade
+      value: false
+  undercloud_parameters_override: "dcn/hieradata_overrides_undercloud.yaml"
+  undercloud_parameters_defaults: "dcn/undercloud_parameter_defaults.yaml"
+  ctlplane_vip: 192.168.122.98
+cloud_domain: "example.com"
+hostname_groups_map:
+  # map ansible groups in the inventory to role hostname format for
+  # 17.1 deployment
+  osp-computes: "central-compute"
+  osp-controllers: "central-controller"
+  osp-dcn1-compute-az1s: "dcn1-compute1"
+  osp-dcn2-compute-az2s: "dcn2-compute2"
+
+  
+roles_groups_map:
+  # map ansible groups to tripleo Role names
+  osp-computes: "Compute"
+  osp-controllers: "Controller"
+  osp-dcn1-compute-az1s: "DistributedCompute"
+  osp-dcn2-compute-az2s: "DistributedCompute"
+
+stacks:
+  - stackname: "central"
+    args:
+      - "--override-ansible-cfg /home/zuul/ansible_config.cfg"
+      - "--templates /usr/share/openstack-tripleo-heat-templates"
+      - "--libvirt-type qemu"
+      - "--timeout 90"
+      - "--overcloud-ssh-user zuul"
+      - "--deployed-server"
+      - "--validation-warnings-fatal"
+      - "--disable-validations"
+      - "--heat-type pod"
+      - "--disable-protected-resource-types"
+    vars:
+      - "/usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/podman.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/low-memory-usage.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/debug.yaml"
+    network_data_file: "dcn/central/network_data.yaml.j2"
+    vips_data_file: "dcn/central/vips_data.yaml"
+    roles_file: "dcn/central/roles.yaml"
+    config_download_file: "dcn/central/config_download.yaml"
+    stack_nodes:
+      - osp-computes
+      - osp-controllers
