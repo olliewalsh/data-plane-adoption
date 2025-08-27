@@ -108,4 +108,4 @@ parameter_defaults:
     PythonInterpreter: /usr/bin/python3
     RootStackName: central
     VipSubnetMap:
-      ctlplane: leaf0
+      ctlplane: ctlplane-subnet

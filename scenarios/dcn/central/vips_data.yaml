@@ -18,5 +18,5 @@
 - name: ctlplane_vip
   network: ctlplane
   ip_address: 192.168.122.99
-  subnet: leaf0
+  subnet: ctlplane-subnet
   dns_name: overcloud
