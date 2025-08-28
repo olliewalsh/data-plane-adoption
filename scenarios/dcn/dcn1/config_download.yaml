@@ -4,10 +4,10 @@ resource_registry:
   OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
   OS::TripleO::OVNMacAddressNetwork: OS::Heat::None
   OS::TripleO::OVNMacAddressPort: OS::Heat::None
-  OS::TripleO::Compute::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_internal_api.yaml
-  OS::TripleO::Compute::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_storage.yaml
-  OS::TripleO::Compute::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_storage_mgmt.yaml
-  OS::TripleO::Compute::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_tenant.yaml
+  OS::TripleO::ComputeDcn1::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_internal_api.yaml
+  OS::TripleO::ComputeDcn1::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_storage.yaml
+  OS::TripleO::ComputeDcn1::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_storage_mgmt.yaml
+  OS::TripleO::ComputeDcn1::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_tenant.yaml
   OS::TripleO::Controller::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_external.yaml
   OS::TripleO::Controller::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_internal_api.yaml
   OS::TripleO::Controller::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/deployed_storage_mgmt.yaml
@@ -45,14 +45,14 @@ parameter_defaults:
   ControllerExtraConfig:
     nova::compute::libvirt::services::libvirt_virt_type: qemu
     nova::compute::libvirt::virt_type: qemu
-  ComputeExtraConfig:
+  ComputeDcn1ExtraConfig:
     nova::compute::libvirt::services::libvirt_virt_type: qemu
     nova::compute::libvirt::virt_type: qemu
   BarbicanSimpleCryptoGlobalDefault: true
   Debug: true
   DockerPuppetDebug: true
   ContainerCli: podman
-  omputeCount: 3
+  ComputeDcn1Count: 3
   NeutronGlobalPhysnetMtu: 1350
   CinderLVMLoopDeviceSize: 20480
   CloudName: overcloud.example.com
@@ -63,7 +63,7 @@ parameter_defaults:
   CloudDomain: example.com
   NetworkConfigWithAnsible: false
   ControllerHostnameFormat: '%stackname%-controller-%index%'
-  ComputeHostnameFormat: '%stackname%-dcn1-compute%index%'
+  ComputeDcn1HostnameFormat: '%stackname%-dcn1-compute%index%'
   CtlplaneNetworkAttributes:
     network:
       dns_domain: example.com
@@ -104,7 +104,7 @@ parameter_defaults:
   NeutronFlatNetworks: leaf0,leaf1,leaf2
   ControllerParameters:
     NeutronBridgeMappings: ["leaf0:br-ex"]
-  ComputeParameters:
+  ComputeDcn1Parameters:
     NeutronBridgeMappings: ["leaf1:br-ex"]
   PythonInterpreter: /usr/bin/python3
   DnsServers: ['10.11.5.19', '10.5.30.160']
