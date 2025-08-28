@@ -81,6 +81,11 @@ roles_groups_map:
   osp-dcn1-compute-az1s: "DistributedCompute"
   osp-dcn2-compute-az2s: "DistributedCompute"
 
+ctlplane_groups_map:
+  # map ansible groups to ctlplane network
+  osp-dcn1-compute-az1s: "ctlplanedcn1"
+  osp-dcn2-compute-az2s: "ctlplanedcn2"
+
 stacks:
   - stackname: "central"
     args:
