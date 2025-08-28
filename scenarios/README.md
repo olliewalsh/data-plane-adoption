@@ -21,7 +21,6 @@ level sections:
 - `hostname_groups_map`
 - `roles_groups_map`
 - `hooks`
-- `ctlplane_groups_map`
 
 ### Undercloud section
 
