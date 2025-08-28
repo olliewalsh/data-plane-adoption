@@ -78,8 +78,8 @@ roles_groups_map:
   # map ansible groups to tripleo Role names
   osp-computes: "Compute"
   osp-controllers: "Controller"
-  osp-dcn1-compute-az1s: "Compute"
-  osp-dcn2-compute-az2s: "Compute"
+  osp-dcn1-compute-az1s: "ComputeDcn1"
+  osp-dcn2-compute-az2s: "ComputeDcn2"
 
 stacks:
   - stackname: "central"
