@@ -81,11 +81,6 @@ roles_groups_map:
   osp-dcn1-compute-az1s: "Compute"
   osp-dcn2-compute-az2s: "Compute"
 
-ctlplane_groups_map:
-  # map ansible groups to ctlplane network
-  osp-dcn1-compute-az1s: "ctlplanedcn1"
-  osp-dcn2-compute-az2s: "ctlplanedcn2"
-
 stacks:
   - stackname: "central"
     args:
@@ -111,6 +106,7 @@ stacks:
     stack_nodes:
       - osp-computes
       - osp-controllers
+    ctlplanenet: ctlplane
   - stackname: dcn1
     args:
       - "--override-ansible-cfg /home/zuul/ansible_config.cfg"
@@ -135,3 +131,4 @@ stacks:
     config_download_file: "dcn/dcn1/config_download.yaml"
     stack_nodes:
       - osp-dcn1-compute-az1s
+    ctlplanenet: ctlplanedcn1
