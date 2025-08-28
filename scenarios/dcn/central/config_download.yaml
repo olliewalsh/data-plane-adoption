@@ -92,20 +92,20 @@ parameter_defaults:
   ControllerParameters:
     NeutronBridgeMappings:
     - leaf0:br-ex
-    DnsServers:
-    - 10.11.5.19
-    - 10.5.30.160
-    NeutronEnableDVR: 'false'
-    NeutronFlatNetworks: leaf0,leaf1,leaf2
-    NeutronNetworkType: geneve
-    NeutronNetworkVLANRanges: leaf0:1:1000,leaf1:1:1000,leaf2:1:1000
-    NeutronTunnelTypes: geneve
-    NovaComputeAvailabilityZone: az-central
-    NovaCrossAZAttach: false
-    NtpServer:
-    - clock.redhat.com
-    - clock2.redhat.com
-    PythonInterpreter: /usr/bin/python3
-    RootStackName: central
-    VipSubnetMap:
-      ctlplane: ctlplane-subnet
+  DnsServers:
+  - 10.11.5.19
+  - 10.5.30.160
+  NeutronEnableDVR: 'false'
+  NeutronFlatNetworks: leaf0,leaf1,leaf2
+  NeutronNetworkType: geneve
+  NeutronNetworkVLANRanges: leaf0:1:1000,leaf1:1:1000,leaf2:1:1000
+  NeutronTunnelTypes: geneve
+  NovaComputeAvailabilityZone: az-central
+  NovaCrossAZAttach: false
+  NtpServer:
+  - clock.redhat.com
+  - clock2.redhat.com
+  PythonInterpreter: /usr/bin/python3
+  RootStackName: central
+  VipSubnetMap:
+    ctlplane: ctlplane-subnet
