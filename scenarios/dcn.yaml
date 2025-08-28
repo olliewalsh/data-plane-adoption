@@ -78,8 +78,8 @@ roles_groups_map:
   # map ansible groups to tripleo Role names
   osp-computes: "Compute"
   osp-controllers: "Controller"
-  osp-dcn1-compute-az1s: "DistributedCompute"
-  osp-dcn2-compute-az2s: "DistributedCompute"
+  osp-dcn1-compute-az1s: "Compute"
+  osp-dcn2-compute-az2s: "Compute"
 
 ctlplane_groups_map:
   # map ansible groups to ctlplane network
@@ -111,3 +111,27 @@ stacks:
     stack_nodes:
       - osp-computes
       - osp-controllers
+  - stackname: dcn1
+    args:
+      - "--override-ansible-cfg /home/zuul/ansible_config.cfg"
+      - "--templates /usr/share/openstack-tripleo-heat-templates"
+      - "--libvirt-type qemu"
+      - "--timeout 90"
+      - "--overcloud-ssh-user zuul"
+      - "--deployed-server"
+      - "--validation-warnings-fatal"
+      - "--disable-validations"
+      - "--heat-type pod"
+      - "--disable-protected-resource-types"
+    vars:
+      - "/usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/podman.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/low-memory-usage.yaml"
+      - "/usr/share/openstack-tripleo-heat-templates/environments/debug.yaml"
+      - "/home/zuul/overcloud-deploy/central/central-export.yaml"
+    network_data_file: "dcn/dcn1/network_data.yaml.j2"
+    vips_data_file: "dcn/dcn1/vips_data.yaml"
+    roles_file: "dcn/dcn1/roles.yaml"
+    config_download_file: "dcn/dcn1/config_download.yaml"
+    stack_nodes:
+      - osp-dcn1-compute-az1s
