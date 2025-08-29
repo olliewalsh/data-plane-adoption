@@ -16,6 +16,7 @@
       subnet: tenant_subnet
     Storage:
       subnet: storage_subnet
+  default_route_networks: ['ControlPlane']
   HostnameFormatDefault: '%stack%-compute-%index%'
   RoleParametersDefault:
     FsAioMaxNumber: 1048576

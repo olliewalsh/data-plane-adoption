@@ -36,6 +36,10 @@ undercloud:
       option: local_subnet
       value: ctlplane-subnet
 
+    - section: ctlplane-subnet
+      option: masquerade
+      value: false
+
     - section: leaf1
       option: cidr
       value: 192.168.133.0/24
@@ -107,6 +111,10 @@ stacks:
       - osp-computes
       - osp-controllers
     ctlplanenet: ctlplane
+    routes:
+      - ip_netmask: 0.0.0.0/0
+        next_hop: 192.168.122.1
+        default: true
   - stackname: dcn1
     args:
       - "--override-ansible-cfg /home/zuul/ansible_config.cfg"
@@ -132,3 +140,7 @@ stacks:
     stack_nodes:
       - osp-dcn1-compute-az1s
     ctlplanenet: ctlplanedcn1
+    routes:
+      - ip_netmask: 0.0.0.0/0
+        next_hop: 192.168.133.1
+        default: true
