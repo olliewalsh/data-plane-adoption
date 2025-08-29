@@ -63,7 +63,8 @@ parameter_defaults:
   CloudDomain: example.com
   NetworkConfigWithAnsible: false
   ControllerHostnameFormat: '%stackname%-controller-%index%'
-  ComputeDcn1HostnameFormat: '%stackname%-dcn1-compute%index%'
+  ComputeDcn1HostnameFormat: '%stackname%-compute1-%index%'
+  ComputeDcn1ControlPlaneSubnet: leaf1
   CtlplaneNetworkAttributes:
     network:
       dns_domain: example.com
