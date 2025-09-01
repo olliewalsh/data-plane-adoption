@@ -85,6 +85,23 @@ roles_groups_map:
   osp-dcn1-compute-az1s: "ComputeDcn1"
   osp-dcn2-compute-az2s: "ComputeDcn2"
 
+network_tripleo_network_map:
+  ctlplane: ctlplane
+  ctlplanedcn1: ctlplane
+  ctlplanedcn2: ctlplane
+  internalapi: internalapi
+  internalapidcn1: internalapi
+  internalapidcn2: internalapi
+  storage: storage
+  storagedcn1: storage
+  storagedcn2: storage
+  storagemgmt: storagemgmt
+  storagemgmtdcn1: storagemgmt
+  storagemgmtdcn2: storagemgmt
+  tenant: tenant
+  tenantdcn1: tenant
+  tenantdcn2: tenant
+
 stacks:
   - stackname: "central"
     args:
