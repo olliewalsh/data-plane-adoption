@@ -169,7 +169,7 @@ dataplane_cr: |
   apiVersion: dataplane.openstack.org/v1beta1
   kind: OpenStackDataPlaneNodeSet
   metadata:
-    name: openstack-$CELL
+    name: ${NODESET:-openstack-$CELL}
   spec:
     tlsEnabled: {{ enable_tlse }}
     networkAttachments:
@@ -211,6 +211,7 @@ dataplane_cr: |
       ansible:
         ansibleUser: {{ edpm_user }}
         ansibleVars:
+          edpm_tuned_profile: {{ edpm_tuned_profile|default(omit) }}
           edpm_bootstrap_release_version_package: []
           os_net_config_iface: {{ dataplane_os_net_config_iface | default ('nic1') }}
           os_net_config_set_route: {{ dataplane_os_net_config_set_route | default(true) | bool }}
@@ -279,7 +280,7 @@ dataplane_cr: |
           edpm_ovs_packages:
           - openvswitch3.3
 
-          {% if use_hugepages|bool +%}
+          {% if use_hugepages|default(false)|bool +%}
           edpm_default_mounts:
             - path: /dev/hugepages2M
               opts: pagesize=2M
@@ -288,7 +289,7 @@ dataplane_cr: |
           {%+ endif +%}
 
           # ovn-controller settings
-          edpm_ovn_bridge_mappings: ["datacentre:{{ neutron_physical_bridge_name }}"]
+          edpm_ovn_bridge_mappings: {{ edpm_ovn_bridge_mappings_nodeset|default(edpm_ovn_bridge_mappings)|default(["datacentre:{{ neutron_physical_bridge_name }}"]) }}
           edpm_ovn_bridge: br-int
           edpm_ovn_encap_type: geneve
           ovn_monitor_all: true
@@ -380,7 +381,7 @@ networker_cr: |
           edpm_ovs_packages:
           - openvswitch3.3
           # ovn-controller settings
-          edpm_ovn_bridge_mappings: ["datacentre:{{ neutron_physical_bridge_name }}"]
+          edpm_ovn_bridge_mappings: {{ edpm_ovn_bridge_mappings|default(["datacentre:{{ neutron_physical_bridge_name }}"]) }}
           edpm_ovn_bridge: br-int
           edpm_ovn_encap_type: geneve
           ovn_monitor_all: true
